@@ -18,35 +18,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-#      - name: Fetch Original Hash from Repository
-#        id: fetch-hash
-#        run: |
-#          ORIGINAL_TEST_URL="https://github.com/Devstock-Academy/Homework-Task-1/cypress/e2e/spec.cy.js"
-#          curl -fsSL "$ORIGINAL_TEST_URL" -o original_test_file.js
-#          EXPECTED_HASH=$(shasum -a 256 original_test_file.js | awk '{ print $1 }')
-#          echo "original_hash=$EXPECTED_HASH" >> $GITHUB_OUTPUT
-#
-#      - name: Compute Test File Hash
-#        id: check
-#        run: |
-#          HASH=$(shasum -a 256 cypress/e2e/spec.cy.js | awk '{ print $1 }')
-#          echo "hash=$HASH" >> $GITHUB_OUTPUT
-#
-#      - name: Verify Test File Integrity
-#        run: |
-#          ORIGINAL="${{ steps.fetch-hash.outputs.original_hash }}"
-#          COMPUTED="${{ steps.check.outputs.hash }}"
-#
-#          if [[ "$COMPUTED" != "$ORIGINAL" ]]; then
-#            echo "🚫 TEST FILE HAS BEEN MODIFIED!"
-#            exit 1
-#          else
-#            echo "✅ Test file integrity verified."
-#          fi
+      #      - name: Fetch Original Hash from Repository
+      #        id: fetch-hash
+      #        run: |
+      #          ORIGINAL_TEST_URL="https://github.com/Devstock-Academy/Homework-Task-1/cypress/e2e/spec.cy.js"
+      #          curl -fsSL "$ORIGINAL_TEST_URL" -o original_test_file.js
+      #          EXPECTED_HASH=$(shasum -a 256 original_test_file.js | awk '{ print $1 }')
+      #          echo "original_hash=$EXPECTED_HASH" >> $GITHUB_OUTPUT
+      #
+      #      - name: Compute Test File Hash
+      #        id: check
+      #        run: |
+      #          HASH=$(shasum -a 256 cypress/e2e/spec.cy.js | awk '{ print $1 }')
+      #          echo "hash=$HASH" >> $GITHUB_OUTPUT
+      #
+      #      - name: Verify Test File Integrity
+      #        run: |
+      #          ORIGINAL="${{ steps.fetch-hash.outputs.original_hash }}"
+      #          COMPUTED="${{ steps.check.outputs.hash }}"
+      #
+      #          if [[ "$COMPUTED" != "$ORIGINAL" ]]; then
+      #            echo "🚫 TEST FILE HAS BEEN MODIFIED!"
+      #            exit 1
+      #          else
+      #            echo "✅ Test file integrity verified."
+      #          fi
 
       - name: Install dependencies
         run: npm install
-        
+
       - name: Run Vite dev server
         run: npm run dev &
 
@@ -73,7 +73,7 @@ jobs:
 
           TEST_RESULTS=$(cat cypress/results/output.json | jq '.')
 
-          curl -X POST https://kodozercy-homework-verifier.vercel.app/api/create-results             -H "Content-Type: application/json"             -H "Authorization: Bearer $ID_TOKEN"             -d @- <<EOF
+          curl -X POST  https://c7c9-83-9-56-28.ngrok-free.app/api/homework-results             -H "Content-Type: application/json"             -H "Authorization: Bearer $ID_TOKEN"             -d @- <<EOF
           {
             "studentRepository": "${{ github.repository }}",
             "commitSha": "${{ github.sha }}",
